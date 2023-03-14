@@ -2,8 +2,8 @@ import styled from 'styled-components';
 import { colors } from '../../constants/colors';
 
 export const Container = styled.button`
-  width:100%;
-  height:45px;
+  width:${({width}) => width};
+  height:${({height}) => height};
   background-color:${colors.primaryLight};
   opacity: ${({ disabled }) => disabled ? "0.7" : "1"};
   color:#fff;

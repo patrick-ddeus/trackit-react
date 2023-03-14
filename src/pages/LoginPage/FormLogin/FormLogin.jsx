@@ -47,7 +47,13 @@ function FormLogin ({ loginState, setLoginState }) {
                 description={"password"}
                 onChangeFunction={loginChangeInput}
                 value={loginState.form["password"]} />
-            <Button text="Entrar" loading={loginState.loading} onClickFunction={handleLogin} />
+            <Button 
+            text="Entrar" 
+            loading={loginState.loading} 
+            onClickFunction={handleLogin} 
+            width="100%"
+            height="45px"
+            />
         </form>
     );
 }

@@ -12,6 +12,7 @@ export const Container = styled.header`
     align-items: center;
     justify-content: space-between;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15);
+    z-index:2;
 
     img{
         margin:0 20px;

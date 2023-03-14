@@ -1,10 +1,10 @@
 import React from 'react';
 import { ThreeDots } from 'react-loader-spinner';
 import { Container } from './styles';
-function Button ({ text, loading, onClickFunction }) {
+function Button ({ text, loading, onClickFunction, width, height}) {
 
     return (
-        <Container disabled={loading} onClick={onClickFunction}>
+        <Container disabled={loading} onClick={onClickFunction} width={width} height={height}>
             {loading ? (<ThreeDots
                 height="80"
                 width="80"

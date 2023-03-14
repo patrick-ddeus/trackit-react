@@ -59,7 +59,12 @@ function FormRegister ({ pageConfig, setPageConfig }) {
                 description={"image"}
                 onChangeFunction={registerChangeInput}
                 value={pageConfig.form["image"]} />
-            <Button text="Cadastrar" loading={pageConfig.loading} onClickFunction={handleRegister} />
+            <Button 
+            text="Cadastrar" 
+            loading={pageConfig.loading} 
+            onClickFunction={handleRegister} 
+            width="100%"
+            height="45px"/>
         </form>);
 }
 

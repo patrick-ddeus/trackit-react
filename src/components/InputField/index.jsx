@@ -4,7 +4,7 @@ import view from "../../assets/view.png"
 
 import { Container, ButtonContainer } from './styles';
 
-function InputField ({ text, disabled, type, description, onChangeFunction, value}) {
+function InputField ({ text, disabled, type, description = "", onChangeFunction, value}) {
   const [toggleInput, setToggleInput] = React.useState(true)
 
   return (
