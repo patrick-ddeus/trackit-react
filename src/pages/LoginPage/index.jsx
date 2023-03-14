@@ -8,19 +8,17 @@ import * as S from "./styles";
 export const PageContext = React.createContext();
 
 function LoginPage () {
-  const [pageConfig, setPageConfig] = React.useState({
+  const [loginState, setLoginState] = React.useState({
     loading: false,
     form: { email: "", password: "" }
   });
 
   return (
-    <PageContext.Provider value={[pageConfig, setPageConfig]}>
-      <S.Container>
-        <img src={Logo} alt="logo" />
-        <FormLogin />
-        <Link to={"/cadastro"}> Não tem conta? Cadastre-se!</Link>
-      </S.Container>
-    </PageContext.Provider>
+    <S.Container>
+      <img src={Logo} alt="logo" />
+      <FormLogin loginState={loginState} setLoginState={setLoginState}/>
+      <Link to={"/cadastro"}> Não tem conta? Cadastre-se!</Link>
+    </S.Container>
   );
 }
 

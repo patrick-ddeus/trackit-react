@@ -13,6 +13,15 @@ class TrackltService{
             throw new Error(e.response.data.message)
         }
     }
+
+    registerUser = async (body) => {
+        try{
+            const data = await axios.post(this.baseurl("/auth/sign-up"), body)
+            return data
+        } catch(e){
+            throw new Error(e.response.data.message)
+        }
+    }
 }
 
 export default TrackltService

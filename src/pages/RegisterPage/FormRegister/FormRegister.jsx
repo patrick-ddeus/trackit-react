@@ -1,12 +1,34 @@
 import React from 'react';
+import { useNavigate } from "react-router-dom";
+import TrackltService from '../../../service/tracklit.api';
 import InputField from '../../../components/InputField';
 import Button from '../../../components/Button';
 
 function FormRegister ({ pageConfig, setPageConfig }) {
+    const navigate = useNavigate();
 
     function registerChangeInput (event) {
         setPageConfig({ ...pageConfig, form: { ...pageConfig.form, [event.currentTarget.name]: event.currentTarget.value } });
     }
+
+    function handleRegister (event) {
+        event.preventDefault();
+        const TrackltApi = new TrackltService();
+        setPageConfig({ ...pageConfig, loading: true });
+
+        async function registerUser () {
+            try {
+                await TrackltApi.registerUser(pageConfig.form);
+                setPageConfig({ ...pageConfig, loading: false });
+                navigate("/");
+            } catch (e) {
+                alert(e.message);
+                setPageConfig({ ...pageConfig, loading: false });
+            }
+        }
+        registerUser();
+    }
+
     return (
         <form method="post">
             <InputField
@@ -37,7 +59,7 @@ function FormRegister ({ pageConfig, setPageConfig }) {
                 description={"image"}
                 onChangeFunction={registerChangeInput}
                 value={pageConfig.form["image"]} />
-            <Button text="Cadastrar" loading={pageConfig.loading}/>
+            <Button text="Cadastrar" loading={pageConfig.loading} onClickFunction={handleRegister} />
         </form>);
 }
 

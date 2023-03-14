@@ -1,31 +1,35 @@
 import React from 'react';
+import { useNavigate } from "react-router-dom";
+import { UserContext } from '../../../contexts/user/userContext';
 import TrackltService from '../../../service/tracklit.api';
 import InputField from '../../../components/InputField';
 import Button from '../../../components/Button';
 
-import { PageContext } from '..';
 
-function FormLogin () {
-    const [loginState, setloginState] = React.useContext(PageContext);
+
+function FormLogin ({ loginState, setLoginState }) {
+    const [userInfo, setUserInfo] = React.useContext(UserContext);
+    const navigate = useNavigate();
 
     function loginChangeInput (event) {
-        setloginState({ ...loginState, form: { ...loginState.form, [event.currentTarget.name]: event.currentTarget.value } });
+        setLoginState({ ...loginState, form: { ...loginState.form, [event.currentTarget.name]: event.currentTarget.value } });
     }
 
     function handleLogin (event) {
         event.preventDefault();
         const TrackltApi = new TrackltService();
-        setloginState({ ...loginState, loading: true });
+        setLoginState({ ...loginState, loading: true });
         async function UserAuthenticate () {
             try {
-                const data = await TrackltApi.authenticateUser(loginState.form);
-                setloginState({ ...loginState, loading: false, user: data });
+                const response = await TrackltApi.authenticateUser(loginState.form);
+                setLoginState({ ...loginState, loading: false });
+                setUserInfo(response.data);
+                navigate("/hoje");
             } catch (e) {
                 alert(e.message);
-                setloginState({ ...loginState, loading: false });
+                setLoginState({ ...loginState, loading: false });
             }
         }
-
         UserAuthenticate();
     }
 
