@@ -1,11 +1,10 @@
 import React from 'react';
-import TrackltService from '../../service/tracklit.api';
 import { ThreeDots } from 'react-loader-spinner';
 import { Container } from './styles';
 function Button ({ text, loading, onClickFunction }) {
 
     return (
-        <Container onClick={onClickFunction}>
+        <Container disabled={loading} onClick={onClickFunction}>
             {loading ? (<ThreeDots
                 height="80"
                 width="80"

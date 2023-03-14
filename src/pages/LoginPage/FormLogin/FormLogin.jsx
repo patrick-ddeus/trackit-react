@@ -32,14 +32,14 @@ function FormLogin () {
     return (
         <form method="post">
             <InputField
-                disabled={false}
+                disabled={loginState.loading}
                 text={"email"}
                 type={"email"}
                 description={"email"}
                 onChangeFunction={loginChangeInput}
                 value={loginState.form["email"]} />
             <InputField
-                disabled={false}
+                disabled={loginState.loading}
                 text={"senha"}
                 type={"password"}
                 description={"password"}
