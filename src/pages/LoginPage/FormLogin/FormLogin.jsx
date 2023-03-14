@@ -5,8 +5,6 @@ import TrackltService from '../../../service/tracklit.api';
 import InputField from '../../../components/InputField';
 import Button from '../../../components/Button';
 
-
-
 function FormLogin ({ loginState, setLoginState }) {
     const [userInfo, setUserInfo] = React.useContext(UserContext);
     const navigate = useNavigate();

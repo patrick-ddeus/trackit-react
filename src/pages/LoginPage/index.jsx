@@ -4,9 +4,6 @@ import Logo from "../../assets/Logo.svg";
 import FormLogin from './FormLogin/FormLogin';
 
 import * as S from "./styles";
-
-export const PageContext = React.createContext();
-
 function LoginPage () {
   const [loginState, setLoginState] = React.useState({
     loading: false,

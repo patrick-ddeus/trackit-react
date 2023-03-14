@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { UserContext } from "./contexts/user/userContext";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
+import TodayPage from "./pages/TodayPage";
 function App () {
   const [userInfo, setUserInfo] = React.useState(null);
 
@@ -12,6 +13,7 @@ function App () {
         <Routes>
           <Route path="/" element={<LoginPage />} />
           <Route path="/cadastro" element={<RegisterPage />} />
+          <Route path="/hoje" element={<TodayPage />} />
         </Routes>
       </Router>
     </UserContext.Provider>
