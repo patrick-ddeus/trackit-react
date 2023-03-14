@@ -5,7 +5,7 @@ import { UserContext } from '../../contexts/user/userContext';
 import { Container } from './styles';
 export default function Header () {
   const userLoggedInfo = React.useContext(UserContext)
-  console.log(userLoggedInfo)
+
   return (
     <Container>
         <img src={Logo} alt="" />

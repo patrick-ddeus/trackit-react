@@ -12,6 +12,7 @@ export const Container = styled.div`
     justify-content: center;
     gap:40px;
     font-family: "Lexend Deca";
+    font-weight: 400;
 
   svg{
     width:91px;
@@ -19,8 +20,10 @@ export const Container = styled.div`
     margin-bottom:10px;
   }
 
-  p{
+  a{
     color:${colors.primaryLight};
     cursor:pointer;
+    text-decoration:none;
+
   }
 `;
