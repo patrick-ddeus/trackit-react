@@ -10,8 +10,7 @@ function InputField ({ text, disabled, type, description }) {
   const [loginState, setloginState] = React.useContext(PageContext);
 
   function handleChangeInput (event) {
-    setloginState({ ...loginState, form: { ...loginState.form, [event.currentTarget.name]: [event.currentTarget.value] } });
-    console.log(loginState)
+    setloginState({ ...loginState, form: { ...loginState.form, [event.currentTarget.name]: event.currentTarget.value } });
   }
 
   return (
