@@ -10,7 +10,7 @@ class TrackltService{
             const data = await axios.post(this.baseurl("/auth/login"), body)
             return data
         } catch(e){
-            throw new Error("Ocorreu um erro ao autenticar o usuário ", e)
+            throw new Error(e.response.data.message)
         }
     }
 }

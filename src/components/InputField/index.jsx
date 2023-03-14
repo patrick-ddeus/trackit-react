@@ -2,16 +2,10 @@ import React from 'react';
 import eye from "../../assets/eye.png"
 import view from "../../assets/view.png"
 
-import { PageContext } from '../../pages/LoginPage';
 import { Container, ButtonContainer } from './styles';
 
-function InputField ({ text, disabled, type, description }) {
+function InputField ({ text, disabled, type, description, onChangeFunction, value}) {
   const [toggleInput, setToggleInput] = React.useState(true)
-  const [loginState, setloginState] = React.useContext(PageContext);
-
-  function handleChangeInput (event) {
-    setloginState({ ...loginState, form: { ...loginState.form, [event.currentTarget.name]: event.currentTarget.value } });
-  }
 
   return (
     <Container>
@@ -19,8 +13,8 @@ function InputField ({ text, disabled, type, description }) {
         disabled={disabled}
         placeholder={text}
         type={type === "password" ? toggleInput ? "password" : "text" : type}
-        onChange={handleChangeInput}
-        value={loginState.form[description]}
+        onChange={onChangeFunction}
+        value={value}
         name={description}
         required />
 
