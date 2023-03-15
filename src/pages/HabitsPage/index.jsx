@@ -1,6 +1,6 @@
 import React from 'react';
 import TrackltService from '../../service/tracklit.api';
-import { UserContext } from '../../contexts/user/userContext';
+import { UserContext } from '../../contexts/userContext';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import HabitForm from './HabitsForm/HabitForm';
@@ -27,7 +27,7 @@ export default function TodayPage () {
     return (
         <Container>
             <Header />
-            <MainContent>
+            <MainContent className="fade-in">
                 <TitleHabit>
                     <h2>Meus hábitos</h2>
                     <button onClick={() => setShowForm(true)} data-test="habit-create-btn">+</button>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { UserContext } from '../../../contexts/user/userContext';
+import { UserContext } from '../../../contexts/userContext';
 import InputField from '../../../components/InputField';
 import Button from '../../../components/Button';
 import TrackltService from '../../../service/tracklit.api';

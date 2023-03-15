@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from "react-router-dom";
-import { UserContext } from '../../../contexts/user/userContext';
+import { UserContext } from '../../../contexts/userContext';
 import TrackltService from '../../../service/tracklit.api';
 import InputField from '../../../components/InputField';
 import Button from '../../../components/Button';

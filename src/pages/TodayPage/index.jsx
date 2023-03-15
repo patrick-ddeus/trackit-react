@@ -3,11 +3,11 @@ import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import TrackltService from '../../service/tracklit.api';
 import DayJs from "dayjs";
-import { UserContext } from '../../contexts/user/userContext';
+import { UserContext } from '../../contexts/userContext';
 import { MainContent } from '../HabitsPage/styles';
 import { convertDay, formatZero } from '../../constants/utils';
 
-import { Container, TitleToday, HabitParagraph, HabitCard } from './styles';
+import { Container, TitleToday, HabitParagraph, HabitCard, SpanDay } from './styles';
 
 export default function TodayPage () {
     // States and Contexts
@@ -58,7 +58,7 @@ export default function TodayPage () {
     return (
         <Container>
             <Header />
-            <MainContent>
+            <MainContent className="fade-in">
                 <TitleToday>
                     <h2 data-test="today">{convertDay(DayJs().day())}, {formatZero(DayJs().date())}/{formatZero(DayJs().month() + 1)}</h2>
                     {!hasDoneHabit ?
@@ -77,10 +77,10 @@ export default function TodayPage () {
                                 {habit.name}
                             </h3>
                             <p data-test="today-habit-sequence">
-                                Sequência atual: <span style={{color: habit.done ? '#8FC549' : '#666666'}} habit={habit.done}>{habit.currentSequence} {habit.currentSequence > 1 ? "dias" : "dia"}</span>
+                                Sequência atual: <SpanDay color={habit.done ? '#8FC549' : '#666666'}>{habit.currentSequence} {habit.currentSequence > 1 ? "dias" : "dia"}</SpanDay>
                             </p>
                             <p data-test="today-habit-record">
-                                Seu Recorde: <span style={{color: habit.highestSequence === habit.currentSequence ? '#8FC549' : '#666666'}}>{habit.highestSequence} {habit.highestSequence > 1 ? "dias" : "dia"}</span>
+                                Seu Recorde: <SpanDay color={habit.highestSequence === habit.currentSequence ? '#8FC549' : '#666666'} >{habit.highestSequence} {habit.highestSequence > 1 ? "dias" : "dia"}</SpanDay>
                             </p>
                         </div>
                         <svg data-test="today-habit-check-btn" xmlns="http://www.w3.org/2000/svg" className="ionicon" viewBox="0 0 512 512" onClick={() => handleDoneHabits(habit)}>

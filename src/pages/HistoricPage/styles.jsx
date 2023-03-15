@@ -13,6 +13,10 @@ export const MainContent = styled.main`
     font-weight: 400;
     background-color:#F2F2F2;
     margin-bottom: 75px;
+    
+    .react-calendar__tile--active{
+        border-radius:20px;
+    }
 `;
 
 export const TitleHistoric = styled.div`

@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import Logo from "../../assets/text-logo.svg";
-import { UserContext } from '../../contexts/user/userContext';
+import { UserContext } from '../../contexts/userContext';
 
 import { Container } from './styles';
 export default function Header () {

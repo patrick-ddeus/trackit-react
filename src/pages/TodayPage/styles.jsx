@@ -57,3 +57,6 @@ export const HabitCard = styled.div`
     }
 `;
 
+export const SpanDay = styled.span`
+    color: ${({ color }) => color}
+`;

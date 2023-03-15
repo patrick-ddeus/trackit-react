@@ -50,6 +50,20 @@ class TrackltService {
         }
     };
 
+    getHistoric = async (token) => {
+        const config = {
+            headers: {
+                "Authorization": `Bearer ${token}`
+            }
+        };
+        try {
+            const data = await axios.get(this.baseurl("/habits/history/daily"), config);
+            return data;
+        } catch (e) {
+            throw new Error(e.response.data.message);
+        }
+    }
+
     postHabit = async (body, token) => {
         const config = {
             headers: {

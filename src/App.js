@@ -1,6 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route} from "react-router-dom";
-import { UserContext } from "./contexts/user/userContext";
+import { UserContext } from "./contexts/userContext";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import TodayPage from "./pages/TodayPage";
