@@ -36,6 +36,20 @@ class TrackltService {
         }
     };
 
+    getHabitToday = async (token) => {
+        const config = {
+            headers: {
+                "Authorization": `Bearer ${token}`
+            }
+        };
+        try {
+            const data = await axios.get(this.baseurl("/habits/today"), config);
+            return data;
+        } catch (e) {
+            throw new Error(e.response.data.message);
+        }
+    };
+
     postHabit = async (body, token) => {
         const config = {
             headers: {
@@ -44,6 +58,20 @@ class TrackltService {
         };
         try {
             const data = await axios.post(this.baseurl("/habits"), body, config);
+            return data;
+        } catch (e) {
+            throw new Error(e.response.data.message);
+        }
+    };
+
+    postDoneHabit = async (id, token) => {
+        const config = {
+            headers: {
+                "Authorization": `Bearer ${token}`
+            }
+        };
+        try {
+            const data = await axios.post(this.baseurl(`/habits/${id}/check}`), {}, config);
             return data;
         } catch (e) {
             throw new Error(e.response.data.message);

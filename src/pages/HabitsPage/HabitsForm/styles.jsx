@@ -1,9 +1,10 @@
 import styled from 'styled-components';
 import { colors } from '../../../constants/colors';
+
 export const Container = styled.div`
     padding:20px 17px;
     background-color:white;
-    margin:20px;
+    margin:20px 0;
     border-radius:5px;
     width:340px;
 `;

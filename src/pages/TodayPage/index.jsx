@@ -1,43 +1,64 @@
 import React from 'react';
-import TrackltService from '../../service/tracklit.api';
-import { UserContext } from '../../contexts/user/userContext';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
-import HabitForm from './HabitsForm/HabitForm';
-import { Container, MainContent, TitleHabit, NoHabitContainer} from './styles';
+import TrackltService from '../../service/tracklit.api';
+import DayJs from "dayjs";
+import { UserContext } from '../../contexts/user/userContext';
+import { MainContent } from '../HabitsPage/styles';
+import { convertDay, formatZero } from '../../constants/utils';
+
+import { Container, TitleToday, HabitParagraph, HabitCard } from './styles';
 export default function TodayPage () {
-    const [userInfo, setUserInfo] = React.useContext(UserContext);
-    const [habits, setHabits] = React.useState([]);
-    const [showForm, setShowForm] = React.useState(false)
+    const [todayHabits, setTodayHabits] = React.useState([]);
+    const userInfo = React.useContext(UserContext);
+    const hasDoneHabit = todayHabits.some(habit => habit.done);
+    const TrackltApi = new TrackltService();
 
     React.useEffect(() => {
-        const TrackltApi = new TrackltService();
-
-        async function fetchHabits () {
+        async function fetchHabit () {
             try {
-                const response = await TrackltApi.getHabits(userInfo.token);
-                setHabits(response.data);
+                const response = await TrackltApi.getHabitToday(userInfo[0].token);
+                setTodayHabits(response.data);
             } catch (e) {
                 alert(e.message);
             }
         }
-        fetchHabits();
+        fetchHabit();
     }, []);
+
+    async function handleDoneHabits(id){
+        try{
+            const response = await TrackltApi.postDoneHabit(id, userInfo[0].token)
+            console.log(response.data)
+        }catch(error){
+            alert(error)
+        }
+    }
+
     return (
         <Container>
             <Header />
             <MainContent>
-                <TitleHabit>
-                    <h2>Meus hábitos</h2>
-                    <button onClick={() => setShowForm(previousState => !previousState)}>+</button>
-                </TitleHabit>
-                {showForm && <HabitForm setHabits={setHabits}/>}
-                {habits ? habits.map(habit => (
-                    <HabitForm key={habit.id} value={habit.name} selectedDays={habit.days} id={habit.id}/>
-                )) : 
-                <NoHabitContainer>
-                    <p>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</p>    
-                </NoHabitContainer>}
+                <TitleToday>
+                    <h2>{convertDay(DayJs().day())}, {formatZero(DayJs().date())}/{formatZero(DayJs().month() + 1)}</h2>
+                    {!hasDoneHabit ?
+                        <HabitParagraph habits={hasDoneHabit}>Nenhum hábito concluído ainda</HabitParagraph> :
+                        <HabitParagraph habits={hasDoneHabit}>67% dos hábitos concluídos</HabitParagraph>
+                    }
+                </TitleToday>
+                {todayHabits && todayHabits.map(habit => (
+                    <HabitCard key={habit.id} habit={habit.done}>
+                        <div>
+                            <h3>{habit.name}</h3>
+                            <p>Sequência atual: {habit.currentSequence} {habit.currentSequence > 1 ? "dias" : "dia"}</p>
+                            <p>Seu Recorde: {habit.highestSequence} {habit.highestSequence > 1 ? "dias" : "dia"}</p>
+                        </div>
+                        <svg xmlns="http://www.w3.org/2000/svg" className="ionicon" viewBox="0 0 512 512" onClick={() => handleDoneHabits(habit.id)}>
+                            <title>Checkbox</title>
+                            <path d="M400 48H112a64.07 64.07 0 00-64 64v288a64.07 64.07 0 0064 64h288a64.07 64.07 0 0064-64V112a64.07 64.07 0 00-64-64zm-35.75 138.29l-134.4 160a16 16 0 01-12 5.71h-.27a16 16 0 01-11.89-5.3l-57.6-64a16 16 0 1123.78-21.4l45.29 50.32 122.59-145.91a16 16 0 0124.5 20.58z"/>
+                        </svg>
+                    </HabitCard>
+                ))}
             </MainContent>
             <Footer />
         </Container>

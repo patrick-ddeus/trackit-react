@@ -7,7 +7,7 @@ import { Container, ButtonDay, ButtonsContainer, HabitTitle } from './styles';
 
 const days = ["Domingo", "Segunda", "Terca", "Quarta", "Quinta", "Sexta", "Sabado"];
 
-export default function HabitForm ({ selectedDays, id, value, setHabits }) {
+export default function HabitForm ({ selectedDays, id, value, setShowForm, setAddedHabit }) {
   const [pageConfig, setPageConfig] = React.useState({
     form: "",
     isSelected: selectedDays || [],
@@ -33,8 +33,8 @@ export default function HabitForm ({ selectedDays, id, value, setHabits }) {
     setPageConfig({ ...pageConfig, loading: true });
     try {
       await TrackltApi.postHabit(bodyPost, UserInfo[0].token);
-      setHabits(previousState => [...previousState, { id: previousState.id + 1 || 1, bodyPost }]);
       setPageConfig({ ...pageConfig, loading: false });
+      setAddedHabit(previous => !previous)
     } catch (error) {
       alert(error);
       setPageConfig({ ...pageConfig, loading: false });
@@ -44,7 +44,6 @@ export default function HabitForm ({ selectedDays, id, value, setHabits }) {
   async function handleDeleteHabit(id){
     try {
          await TrackltApi.deleteHabit(id, UserInfo[0].token);
-         setHabits(previousState => previousState.filter(habit => habit.id !== id));
        } catch (error) {
          alert(error);
        }
@@ -74,7 +73,7 @@ export default function HabitForm ({ selectedDays, id, value, setHabits }) {
         </ButtonDay>
       )}
       {!value && <ButtonsContainer>
-        <button>Cancelar</button>
+        <button onClick={() => setShowForm(false)}>Cancelar</button>
         <Button onClickFunction={handleSubmit} text={"Salvar"} loading={pageConfig.loading} />
       </ButtonsContainer>}
     </Container>
