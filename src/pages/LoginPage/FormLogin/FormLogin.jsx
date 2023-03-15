@@ -40,20 +40,23 @@ function FormLogin ({ loginState, setLoginState }) {
                 type={"email"}
                 description={"email"}
                 onChangeFunction={loginChangeInput}
-                value={loginState.form["email"]} />
+                value={loginState.form["email"]} 
+                dataTest={"email-input"}/>
             <InputField
                 disabled={loginState.loading}
                 text={"senha"}
                 type={"password"}
                 description={"password"}
                 onChangeFunction={loginChangeInput}
-                value={loginState.form["password"]} />
+                value={loginState.form["password"]} 
+                dataTest={"password-input"}/>
             <Button 
             text="Entrar" 
             loading={loginState.loading} 
             onClickFunction={handleLogin} 
             width="100%"
             height="45px"
+            dataTest={"login-btn"}
             />
         </form>
     );

@@ -30,7 +30,7 @@ export default function TodayPage () {
             <MainContent>
                 <TitleHabit>
                     <h2>Meus hábitos</h2>
-                    <button onClick={() => setShowForm(true)}>+</button>
+                    <button onClick={() => setShowForm(true)} data-test="habit-create-btn">+</button>
                 </TitleHabit>
                 {showForm && <HabitForm setShowForm={setShowForm} habits={habits} setHabits={setHabits}/>}
                 {habits.length !== 0 ? habits.map(habit => (

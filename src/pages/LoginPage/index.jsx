@@ -15,7 +15,7 @@ function LoginPage () {
     <S.Container>
       <img src={Logo} alt="logo" />
       <FormLogin loginState={loginState} setLoginState={setLoginState}/>
-      <Link to={"/cadastro"}> Não tem conta? Cadastre-se!</Link>
+      <Link to={"/cadastro"} data-test="signup-link"> Não tem conta? Cadastre-se!</Link>
     </S.Container>
   );
 }

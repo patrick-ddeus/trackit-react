@@ -13,7 +13,7 @@ function RegisterPage () {
         <S.Container>
             <img src={Logo} alt="logo" />
             <FormRegister pageConfig={pageConfig} setPageConfig={setPageConfig} />
-            <Link to={"/"}> Já tem uma conta? Faça login!</Link>
+            <Link to={"/"} data-test="login-link"> Já tem uma conta? Faça login!</Link>
         </S.Container>
     );
 }

@@ -37,34 +37,39 @@ function FormRegister ({ pageConfig, setPageConfig }) {
                 type={"email"}
                 description={"email"}
                 onChangeFunction={registerChangeInput}
-                value={pageConfig.form["email"]} />
+                value={pageConfig.form["email"]}
+                dataTest={"email-input"} />
             <InputField
                 disabled={pageConfig.loading}
                 text={"senha"}
                 type={"password"}
                 description={"password"}
                 onChangeFunction={registerChangeInput}
-                value={pageConfig.form["password"]} />
+                value={pageConfig.form["password"]} 
+                dataTest={"password-input"}/>
             <InputField
                 disabled={pageConfig.loading}
                 text={"nome"}
                 type={"text"}
                 description={"name"}
                 onChangeFunction={registerChangeInput}
-                value={pageConfig.form["name"]} />
+                value={pageConfig.form["name"]} 
+                dataTest={"user-name-input"}/>
             <InputField
                 disabled={pageConfig.loading}
                 text={"foto"}
                 type={"text"}
                 description={"image"}
                 onChangeFunction={registerChangeInput}
-                value={pageConfig.form["image"]} />
+                value={pageConfig.form["image"]} 
+                dataTest={"user-image-input"}/>
             <Button 
             text="Cadastrar" 
             loading={pageConfig.loading} 
             onClickFunction={handleRegister} 
             width="100%"
-            height="45px"/>
+            height="45px"
+            dataTest={"signup-btn"}/>
         </form>);
 }
 

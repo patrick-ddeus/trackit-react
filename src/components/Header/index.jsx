@@ -15,7 +15,7 @@ export default function Header () {
   }, []);
 
   return (
-    <Container>
+    <Container data-test="header">
       <img src={Logo} alt="" />
       <img src={userLoggedInfo[0]?.image} alt="" />
     </Container>

@@ -9,9 +9,9 @@ export default function Footer () {
     const [userInfo, setUserInfo] = React.useContext(UserContext);
 
     return (
-        <Container>
-            <Link to="/habitos">Hábitos</Link>
-            <Link to="/hoje">
+        <Container data-test="menu">
+            <Link to="/habitos" data-test="habit-link">Hábitos</Link>
+            <Link to="/hoje" data-test="today-link">
                 <CircularProgressbar
                     value={userInfo?.progress}
                     text={`Hoje`}
@@ -26,7 +26,7 @@ export default function Footer () {
                     })}
                 />
             </Link>
-            <Link to="/historico">Histórico</Link>
+            <Link to="/historico" data-test="history-link">Histórico</Link>
         </Container>
     );
 }
