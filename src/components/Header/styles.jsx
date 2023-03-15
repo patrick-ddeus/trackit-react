@@ -22,5 +22,7 @@ export const Container = styled.header`
         width:51px;
         border-radius:50%;
         cursor:pointer;
+       
     }
 `;
+

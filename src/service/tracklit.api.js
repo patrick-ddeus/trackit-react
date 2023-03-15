@@ -71,7 +71,21 @@ class TrackltService {
             }
         };
         try {
-            const data = await axios.post(this.baseurl(`/habits/${id}/check}`), {}, config);
+            const data = await axios.post(this.baseurl(`/habits/${id}/check`), {}, config);
+            return data;
+        } catch (e) {
+            throw new Error(e.response.data.message);
+        }
+    };
+
+    postUndoneHabit = async (id, token) => {
+        const config = {
+            headers: {
+                "Authorization": `Bearer ${token}`
+            }
+        };
+        try {
+            const data = await axios.post(this.baseurl(`/habits/${id}/uncheck`), {}, config);
             return data;
         } catch (e) {
             throw new Error(e.response.data.message);
@@ -85,7 +99,7 @@ class TrackltService {
             }
         };
         try {
-            const data = await axios.delete(this.baseurl(`/habits/${id}}`), config);
+            const data = await axios.delete(this.baseurl(`/habits/${id}`), config);
             return data;
         } catch (e) {
             throw new Error(e.response.data.message);

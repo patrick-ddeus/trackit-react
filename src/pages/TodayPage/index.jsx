@@ -7,17 +7,20 @@ import { UserContext } from '../../contexts/user/userContext';
 import { MainContent } from '../HabitsPage/styles';
 import { convertDay, formatZero } from '../../constants/utils';
 
-import { Container, TitleToday, HabitParagraph, HabitCard } from './styles';
+import { Container, TitleToday, HabitParagraph, HabitCard, SpanDay } from './styles';
+
 export default function TodayPage () {
+    // States and Contexts
     const [todayHabits, setTodayHabits] = React.useState([]);
-    const userInfo = React.useContext(UserContext);
+    const [userInfo, setUserInfo] = React.useContext(UserContext);
+    // Constants
     const hasDoneHabit = todayHabits.some(habit => habit.done);
     const TrackltApi = new TrackltService();
 
     React.useEffect(() => {
         async function fetchHabit () {
             try {
-                const response = await TrackltApi.getHabitToday(userInfo[0].token);
+                const response = await TrackltApi.getHabitToday(userInfo.token);
                 setTodayHabits(response.data);
             } catch (e) {
                 alert(e.message);
@@ -26,13 +29,30 @@ export default function TodayPage () {
         fetchHabit();
     }, []);
 
-    async function handleDoneHabits(id){
-        try{
-            const response = await TrackltApi.postDoneHabit(id, userInfo[0].token)
-            console.log(response.data)
-        }catch(error){
-            alert(error)
+    React.useEffect(() => {
+        const doneHabits = todayHabits.filter(habit => habit.done);
+        const progress = (doneHabits.length / todayHabits.length) * 100;
+        setUserInfo({ ...userInfo, progress: progress || 0 });
+    }, [todayHabits]);
+
+    async function handleDoneHabits (habit) {
+        try {
+            if (habit.done) {
+                toggleCheckedButton(habit);
+                await TrackltApi.postUndoneHabit(habit.id, userInfo.token);
+            } else {
+                toggleCheckedButton(habit);
+                await TrackltApi.postDoneHabit(habit.id, userInfo.token);
+            }
+        } catch (error) {
+            alert(error);
         }
+    }
+
+    function toggleCheckedButton (habit) {
+        const transformedHabits = todayHabits.map(todayHabit => todayHabit.id === habit.id ?
+            { ...todayHabit, done: !habit.done, currentSequence: !habit.done ? todayHabit.currentSequence + 1 : todayHabit.currentSequence - 1 } : todayHabit);
+        setTodayHabits(transformedHabits);
     }
 
     return (
@@ -43,19 +63,19 @@ export default function TodayPage () {
                     <h2>{convertDay(DayJs().day())}, {formatZero(DayJs().date())}/{formatZero(DayJs().month() + 1)}</h2>
                     {!hasDoneHabit ?
                         <HabitParagraph habits={hasDoneHabit}>Nenhum hábito concluído ainda</HabitParagraph> :
-                        <HabitParagraph habits={hasDoneHabit}>67% dos hábitos concluídos</HabitParagraph>
+                        <HabitParagraph habits={hasDoneHabit}>{Math.round(userInfo.progress)}% dos hábitos concluídos</HabitParagraph>
                     }
                 </TitleToday>
                 {todayHabits && todayHabits.map(habit => (
                     <HabitCard key={habit.id} habit={habit.done}>
                         <div>
                             <h3>{habit.name}</h3>
-                            <p>Sequência atual: {habit.currentSequence} {habit.currentSequence > 1 ? "dias" : "dia"}</p>
-                            <p>Seu Recorde: {habit.highestSequence} {habit.highestSequence > 1 ? "dias" : "dia"}</p>
+                            <p>Sequência atual: <SpanDay habit={habit.done}>{habit.currentSequence} {habit.currentSequence > 1 ? "dias" : "dia"}</SpanDay></p>
+                            <p>Seu Recorde: <SpanDay habit={habit.highestSequence === habit.currentSequence}>{habit.highestSequence} {habit.highestSequence > 1 ? "dias" : "dia"}</SpanDay></p>
                         </div>
-                        <svg xmlns="http://www.w3.org/2000/svg" className="ionicon" viewBox="0 0 512 512" onClick={() => handleDoneHabits(habit.id)}>
+                        <svg xmlns="http://www.w3.org/2000/svg" className="ionicon" viewBox="0 0 512 512" onClick={() => handleDoneHabits(habit)}>
                             <title>Checkbox</title>
-                            <path d="M400 48H112a64.07 64.07 0 00-64 64v288a64.07 64.07 0 0064 64h288a64.07 64.07 0 0064-64V112a64.07 64.07 0 00-64-64zm-35.75 138.29l-134.4 160a16 16 0 01-12 5.71h-.27a16 16 0 01-11.89-5.3l-57.6-64a16 16 0 1123.78-21.4l45.29 50.32 122.59-145.91a16 16 0 0124.5 20.58z"/>
+                            <path d="M400 48H112a64.07 64.07 0 00-64 64v288a64.07 64.07 0 0064 64h288a64.07 64.07 0 0064-64V112a64.07 64.07 0 00-64-64zm-35.75 138.29l-134.4 160a16 16 0 01-12 5.71h-.27a16 16 0 01-11.89-5.3l-57.6-64a16 16 0 1123.78-21.4l45.29 50.32 122.59-145.91a16 16 0 0124.5 20.58z" />
                         </svg>
                     </HabitCard>
                 ))}

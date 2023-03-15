@@ -22,6 +22,7 @@ function FormLogin ({ loginState, setLoginState }) {
                 const response = await TrackltApi.authenticateUser(loginState.form);
                 setLoginState({ ...loginState, loading: false });
                 setUserInfo(response.data);
+                localStorage.setItem("userInfo", JSON.stringify({...response.data, password: ""}))
                 navigate("/hoje");
             } catch (e) {
                 alert(e.message);

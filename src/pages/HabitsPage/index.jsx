@@ -9,7 +9,6 @@ export default function TodayPage () {
     const [userInfo, setUserInfo] = React.useContext(UserContext);
     const [habits, setHabits] = React.useState([]);
     const [showForm, setShowForm] = React.useState(false)
-    const [addedHabit, setAddedHabit] = React.useState(false)
 
     React.useEffect(() => {
         const TrackltApi = new TrackltService();
@@ -23,7 +22,7 @@ export default function TodayPage () {
             }
         }
         fetchHabits();
-    }, [addedHabit]);
+    }, []);
 
     return (
         <Container>
@@ -33,9 +32,9 @@ export default function TodayPage () {
                     <h2>Meus hábitos</h2>
                     <button onClick={() => setShowForm(true)}>+</button>
                 </TitleHabit>
-                {showForm && <HabitForm setShowForm={setShowForm} setAddedHabit={setAddedHabit}/>}
+                {showForm && <HabitForm setShowForm={setShowForm} habits={habits} setHabits={setHabits}/>}
                 {habits.length !== 0 ? habits.map(habit => (
-                    <HabitForm key={habit.id} value={habit.name} selectedDays={habit.days} id={habit.id}/>
+                    <HabitForm key={habit.id} value={habit.name} habits={habits} setHabits={setHabits} selectedDays={habit.days} id={habit.id}/>
                 )) : 
                 <NoHabitContainer>
                     <p>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</p>    

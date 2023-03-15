@@ -7,46 +7,70 @@ import { Container, ButtonDay, ButtonsContainer, HabitTitle } from './styles';
 
 const days = ["Domingo", "Segunda", "Terca", "Quarta", "Quinta", "Sexta", "Sabado"];
 
-export default function HabitForm ({ selectedDays, id, value, setShowForm, setAddedHabit }) {
+export default function HabitForm ({ selectedDays, id, value, setShowForm, habits, setHabits }) {
+  const [userInfo, setUserInfo] = React.useContext(UserContext);
   const [pageConfig, setPageConfig] = React.useState({
     form: "",
-    isSelected: selectedDays || [],
+    isSelected: selectedDays || userInfo.days || [],
     loading: false
   });
-  const UserInfo = React.useContext(UserContext);
   const TrackltApi = new TrackltService();
 
   function handleButtonDayClick (day) {
     const existingDay = pageConfig.isSelected.find(daySelected => daySelected === day);
     if (!existingDay && existingDay !== 0) {
       setPageConfig({ ...pageConfig, isSelected: [...pageConfig.isSelected, day] });
+      setUserInfo({...userInfo, days: [...userInfo.days || [], day]})
     } else {
       const transformedDays = pageConfig.isSelected.filter(daySelected => daySelected !== day);
       setPageConfig({ ...pageConfig, isSelected: transformedDays });
+      setUserInfo({...userInfo, days: transformedDays})
     }
   }
 
   async function handleSubmit () {
     const bodyPost = {};
-    bodyPost.name = pageConfig.form;
+    bodyPost.name = userInfo.form;
     bodyPost.days = pageConfig.isSelected;
     setPageConfig({ ...pageConfig, loading: true });
     try {
-      await TrackltApi.postHabit(bodyPost, UserInfo[0].token);
+      const response = await TrackltApi.postHabit(bodyPost, userInfo.token);
       setPageConfig({ ...pageConfig, loading: false });
-      setAddedHabit(previous => !previous)
+      setHabits([...habits, response.data]);
+      resetForm()
     } catch (error) {
       alert(error);
       setPageConfig({ ...pageConfig, loading: false });
     }
   }
 
-  async function handleDeleteHabit(id){
-    try {
-         await TrackltApi.deleteHabit(id, UserInfo[0].token);
-       } catch (error) {
-         alert(error);
-       }
+  function resetForm(){
+    setPageConfig({...pageConfig, form: ""})
+    setUserInfo({...userInfo, form: "", days: []})
+    setShowForm(false)
+  }
+
+  function handleOnChange(event){
+    setPageConfig({ ...pageConfig, form: event.target.value })
+    setUserInfo({...userInfo, form: event.target.value})
+  }
+
+  function handleDeleteHabit (id) {
+    const transformedHabits = habits.filter(habit => habit.id !== id);
+    // eslint-disable-next-line no-restricted-globals
+    const confirmDelete = window.confirm("Essa ação é irreversível, tem certeza que deseja deletar?");
+
+    async function deleteHabitEvent () {
+      try {
+        TrackltApi.deleteHabit(id, userInfo.token);
+        setHabits(transformedHabits);
+      } catch (error) {
+        alert(error);
+      }
+    }
+    if (confirmDelete) {
+      deleteHabitEvent();
+    }
   }
 
   return (
@@ -54,9 +78,10 @@ export default function HabitForm ({ selectedDays, id, value, setShowForm, setAd
       {!value ? <InputField
         text="nome do hábito"
         type="text"
+        required={false}
         disabled={pageConfig.loading}
-        value={pageConfig.form}
-        onChangeFunction={(event) => setPageConfig({ ...pageConfig, form: event.target.value })}
+        value={userInfo.form || pageConfig.form}
+        onChangeFunction={handleOnChange}
       /> :
         <HabitTitle>
           {value}
@@ -68,7 +93,7 @@ export default function HabitForm ({ selectedDays, id, value, setShowForm, setAd
           </svg>
         </HabitTitle>}
       {days.map((day, index) =>
-        <ButtonDay key={index} isSelected={pageConfig.isSelected.includes(index)} onClick={() => handleButtonDayClick(index)}>
+        <ButtonDay disabled={pageConfig.loading || value} key={index} isSelected={pageConfig.isSelected.includes(index)} onClick={() => handleButtonDayClick(index)}>
           {day.charAt(0)}
         </ButtonDay>
       )}

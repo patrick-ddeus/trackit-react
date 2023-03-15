@@ -4,7 +4,7 @@ import view from "../../assets/view.png"
 
 import { Container, ButtonContainer } from './styles';
 
-function InputField ({ text, disabled, type, description = "", onChangeFunction, value}) {
+function InputField ({ text, disabled, type, description = "", onChangeFunction, value, required}) {
   const [toggleInput, setToggleInput] = React.useState(true)
 
   return (
@@ -16,7 +16,7 @@ function InputField ({ text, disabled, type, description = "", onChangeFunction,
         onChange={onChangeFunction}
         value={value}
         name={description}
-        required />
+        required={required || true} />
 
       {description === "password" &&
         <img onClick={() => setToggleInput(!toggleInput)} src={toggleInput ? eye : view} alt="eye"/>}
