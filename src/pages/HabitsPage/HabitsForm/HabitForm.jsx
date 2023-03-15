@@ -99,7 +99,7 @@ export default function HabitForm ({ selectedDays, id, value, setShowForm, habit
         </ButtonDay>
       )}
       {!value && <ButtonsContainer>
-        <button onClick={() => setShowForm(false)} data-test="habit-create-cancel-btn">Cancelar</button>
+        <button disabled={pageConfig.loading} onClick={() => setShowForm(false)} data-test="habit-create-cancel-btn">Cancelar</button>
         <Button onClickFunction={handleSubmit} text={"Salvar"} loading={pageConfig.loading} dataTest={"habit-create-save-btn"} />
       </ButtonsContainer>}
     </Container>

@@ -57,6 +57,3 @@ export const HabitCard = styled.div`
     }
 `;
 
-export const SpanDay = styled.span`
-  color: ${({habit}) => habit && "#8FC549"};
-`;

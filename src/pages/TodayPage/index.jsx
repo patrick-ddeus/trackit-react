@@ -7,7 +7,7 @@ import { UserContext } from '../../contexts/user/userContext';
 import { MainContent } from '../HabitsPage/styles';
 import { convertDay, formatZero } from '../../constants/utils';
 
-import { Container, TitleToday, HabitParagraph, HabitCard, SpanDay } from './styles';
+import { Container, TitleToday, HabitParagraph, HabitCard } from './styles';
 
 export default function TodayPage () {
     // States and Contexts
@@ -62,16 +62,26 @@ export default function TodayPage () {
                 <TitleToday>
                     <h2 data-test="today">{convertDay(DayJs().day())}, {formatZero(DayJs().date())}/{formatZero(DayJs().month() + 1)}</h2>
                     {!hasDoneHabit ?
-                        <HabitParagraph habits={hasDoneHabit} data-test="today-counter">Nenhum hábito concluído ainda</HabitParagraph> :
-                        <HabitParagraph habits={hasDoneHabit} data-test="today-counter">{Math.round(userInfo.progress)}% dos hábitos concluídos</HabitParagraph>
+                        <HabitParagraph habits={hasDoneHabit} data-test="today-counter">
+                            Nenhum hábito concluído ainda
+                        </HabitParagraph> :
+                        <HabitParagraph habits={hasDoneHabit} data-test="today-counter">
+                            {Math.round(userInfo.progress)}% dos hábitos concluídos
+                        </HabitParagraph>
                     }
                 </TitleToday>
                 {todayHabits && todayHabits.map(habit => (
                     <HabitCard key={habit.id} habit={habit.done} data-test="today-habit-container">
                         <div>
-                            <h3 data-test="today-habit-name">{habit.name}</h3>
-                            <p data-test="today-habit-sequence">Sequência atual: <SpanDay habit={habit.done}>{habit.currentSequence} {habit.currentSequence > 1 ? "dias" : "dia"}</SpanDay></p>
-                            <p data-test="today-habit-record">Seu Recorde: <SpanDay habit={habit.highestSequence === habit.currentSequence}>{habit.highestSequence} {habit.highestSequence > 1 ? "dias" : "dia"}</SpanDay></p>
+                            <h3 data-test="today-habit-name">
+                                {habit.name}
+                            </h3>
+                            <p data-test="today-habit-sequence">
+                                Sequência atual: <span style={{color: habit.done ? '#8FC549' : '#666666'}} habit={habit.done}>{habit.currentSequence} {habit.currentSequence > 1 ? "dias" : "dia"}</span>
+                            </p>
+                            <p data-test="today-habit-record">
+                                Seu Recorde: <span style={{color: habit.highestSequence === habit.currentSequence ? '#8FC549' : '#666666'}}>{habit.highestSequence} {habit.highestSequence > 1 ? "dias" : "dia"}</span>
+                            </p>
                         </div>
                         <svg data-test="today-habit-check-btn" xmlns="http://www.w3.org/2000/svg" className="ionicon" viewBox="0 0 512 512" onClick={() => handleDoneHabits(habit)}>
                             <title>Checkbox</title>
