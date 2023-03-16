@@ -80,7 +80,7 @@ export default function TodayPage () {
                                 Sequência atual: <span style={{color: habit.done ? '#8FC549' : '#666666'}}>{habit.currentSequence} {habit.currentSequence > 1 ? "dias" : "dia"}</span>
                             </p>
                             <p data-test="today-habit-record">
-                                Seu Recorde: <span style={{color: habit.highestSequence === habit.currentSequence ? '#8FC549' : '#666666'}}>{habit.highestSequence} {habit.highestSequence > 1 ? "dias" : "dia"}</span>
+                                Seu Recorde: <span style={{color: (habit.highestSequence === habit.currentSequence) && habit.highestSequence !== 0 ? '#8FC549' : '#666666'}}>{habit.highestSequence} {habit.highestSequence > 1 ? "dias" : "dia"}</span>
                             </p>
                         </div>
                         <svg data-test="today-habit-check-btn" xmlns="http://www.w3.org/2000/svg" className="ionicon" viewBox="0 0 512 512" onClick={() => handleDoneHabits(habit)}>

@@ -97,13 +97,15 @@ export default function HistoricPage () {
             </Modal>
           </Fade>
         }
-        <Calendar
-          onChange={onChange}
-          value={value}
-          calendarType="US"
-          formatDay={(_, date) => verifyDate(date)}
-          onClickDay={(value) => handleOnClickDay(value)}
-        />
+        <div data-test="calendar">
+          <Calendar
+            onChange={onChange}
+            value={value}
+            calendarType="US"
+            formatDay={(_, date) => verifyDate(date)}
+            onClickDay={(value) => handleOnClickDay(value)}
+          />
+        </div>
       </MainContent>
       <Footer />
     </Container>
