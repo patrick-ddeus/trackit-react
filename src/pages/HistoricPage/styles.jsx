@@ -42,7 +42,6 @@ export const MainContent = styled.main`
     .react-calendar__month-view__days button{
         height:50px;
     }
-    
 
 `;
 
@@ -89,35 +88,40 @@ export const Modal = styled(baseAnimation)`
   background-color:white;
   width:500px;
   z-index: 999;
-  border-radius:5px;
+  border-radius:10px;
   animation-name: ${modalShow};
-  overflow:hidden;
 
-  /* div{
-    padding:20px;
-    font-size:18px;
-    font-weight:400;
-    color:#D70900;
-    cursor:pointer;
-    font-family:"Recursive", sans-serif;
-    transition:background .2s, color .2s;
+  ul{
+    min-height: 0;
+    max-height: 500px;
+    overflow-y: auto;
+    -ms-overflow-style: none;
+    scrollbar-width: thin;
+
+    /* width */
+    &::-webkit-scrollbar {
+          width: 7px;
+        }
+      
+      /* Track */
+    &::-webkit-scrollbar-track {
+      background:#f0f0f0; 
+    }
     
-    &:hover{
-      background-color:#FB6B6B;
-      color:white;
+    /* Handle */
+    &::-webkit-scrollbar-thumb {
+      background: #787C81; 
     }
-    &:first-child{
-      border-top-left-radius:5px;
-      border-top-right-radius:5px;
+    
+    /* Handle on hover */
+    &::-webkit-scrollbar-thumb:hover {
+      background: #555; 
     }
-    &:last-child{
-      border-bottom-left-radius:5px;
-      border-bottom-right-radius:5px;
-    }
-  } */
+  }
+  
 `;
 
-export const ModalArticle = styled.article`
+export const ModalItem = styled.li`
     height: 64px;
     background: #FFFFFF;
     padding:15px;
@@ -126,9 +130,11 @@ export const ModalArticle = styled.article`
     font-weight: 400;
     color: #666666;
 
+
     display:flex;
     justify-content: space-between;
     align-items:center;
+    transition:color .2s ease;
 
     & + &{
         margin-top:15px;
@@ -153,4 +159,18 @@ export const ModalArticle = styled.article`
         cursor:pointer;
         fill: ${({ done }) => done ? "#8FC549" : "#fb2e42"};
     }
+
+    &:last-child{
+      border-bottom-right-radius: 5px;
+      border-bottom-left-radius: 5px;
+    }
+`;
+
+export const ModalHeader = styled.div`
+    width:100%;
+    height:65px;
+    background-color: ${({ done }) => done ? "#8FC549" : "#fb2e42"};
+    box-shadow: rgba(0, 0, 0, 0.15) 0px 4px 8px;
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
 `;

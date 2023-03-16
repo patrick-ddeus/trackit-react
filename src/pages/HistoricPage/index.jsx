@@ -7,7 +7,7 @@ import 'react-calendar/dist/Calendar.css';
 
 import { formatZero } from '../../constants/utils';
 import { UserContext } from '../../contexts/userContext';
-import { Container, MainContent, TitleHistoric, DayDiv, Fade, Modal, ModalArticle } from './styles';
+import { Container, MainContent, TitleHistoric, DayDiv, Fade, Modal, ModalItem, ModalHeader } from './styles';
 import { convertDay } from '../../constants/utils';
 export default function HistoricPage () {
   const [value, onChange] = React.useState(new Date());
@@ -27,8 +27,10 @@ export default function HistoricPage () {
         alert(e);
       }
     }
+    if(userInfo){
+      fetchHistoric();
+    }
 
-    fetchHistoric();
   }, []);
 
   function verifyDate (date) {
@@ -49,8 +51,6 @@ export default function HistoricPage () {
       </div>
     );
   }
-
-
 
   function toggleModal (event) {
     if (event.target.matches("div")) {
@@ -80,20 +80,23 @@ export default function HistoricPage () {
         {modalOpen &&
           <Fade onClick={toggleModal}>
             <Modal >
-              {modalOptions.map(options => (
-                <ModalArticle done={options.done} key={options.id}>
-                  <div>
-                    <h3>{options.name}</h3>
-                    <p>Situação: Finalizada</p>
-                    <p>Dia: {convertDay(options.weekDay)}</p>
-                    <p>Data: {formatDate(new Date(options.date))}</p>
-                  </div>
-                  <svg xmlns="http://www.w3.org/2000/svg" className="ionicon" viewBox="0 0 512 512">
-                    <title>Checkbox</title>
-                    <path d="M400 48H112a64.07 64.07 0 00-64 64v288a64.07 64.07 0 0064 64h288a64.07 64.07 0 0064-64V112a64.07 64.07 0 00-64-64zm-35.75 138.29l-134.4 160a16 16 0 01-12 5.71h-.27a16 16 0 01-11.89-5.3l-57.6-64a16 16 0 1123.78-21.4l45.29 50.32 122.59-145.91a16 16 0 0124.5 20.58z" />
-                  </svg>
-                </ModalArticle>
-              ))}
+              <ModalHeader done={modalOptions.some(habit => habit.done)} />
+              <ul>
+                {modalOptions.map(options => (
+                  <ModalItem done={options.done} key={options.id}>
+                    <div>
+                      <h3>{options.name}</h3>
+                      <p>Situação: Finalizada</p>
+                      <p>Dia: {convertDay(options.weekDay)}</p>
+                      <p>Data: {formatDate(new Date(options.date))}</p>
+                    </div>
+                    <svg xmlns="http://www.w3.org/2000/svg" className="ionicon" viewBox="0 0 512 512">
+                      <title>Checkbox</title>
+                      <path d="M400 48H112a64.07 64.07 0 00-64 64v288a64.07 64.07 0 0064 64h288a64.07 64.07 0 0064-64V112a64.07 64.07 0 00-64-64zm-35.75 138.29l-134.4 160a16 16 0 01-12 5.71h-.27a16 16 0 01-11.89-5.3l-57.6-64a16 16 0 1123.78-21.4l45.29 50.32 122.59-145.91a16 16 0 0124.5 20.58z" />
+                    </svg>
+                  </ModalItem>
+                ))}
+              </ul>
             </Modal>
           </Fade>
         }
