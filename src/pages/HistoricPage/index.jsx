@@ -35,11 +35,11 @@ export default function HistoricPage () {
     const today = new Date();
     const habit = historic.find(h => h.day === formatDate(date) && h.day !== formatDate(today));
     if (habit) {
-      return habit.habits.some(h => h.done && h.date !== date) ?
-        <DayDiv color={"#8cc654"}>
+      return habit.habits.some(h => !h.done && h.date !== date) ?
+        <DayDiv color={"#ea5766"}>
           {date.getDate()}
         </DayDiv> :
-        <DayDiv color={"#ea5766"}>
+        <DayDiv color={"#8cc654"}>
           {date.getDate()}
         </DayDiv>;
     }

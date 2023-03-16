@@ -137,10 +137,6 @@ export const ModalArticle = styled.article`
     &:hover{
         color:${({ done }) => done ? "#8FC549" : "#fb2e42"};
         cursor:pointer;
-
-        svg{
-            fill: ${({ done }) => done ? "#8FC549" : "#fb2e42"};
-        }
     }
     
     h3{
@@ -154,7 +150,7 @@ export const ModalArticle = styled.article`
 
     svg{
         width:76px;
-        fill:#EBEBEB;
         cursor:pointer;
+        fill: ${({ done }) => done ? "#8FC549" : "#fb2e42"};
     }
 `;
