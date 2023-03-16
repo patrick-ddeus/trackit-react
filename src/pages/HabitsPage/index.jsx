@@ -4,11 +4,11 @@ import { UserContext } from '../../contexts/userContext';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import HabitForm from './HabitsForm/HabitForm';
-import { Container, MainContent, TitleHabit, NoHabitContainer} from './styles';
+import { Container, MainContent, TitleHabit, NoHabitContainer } from './styles';
 export default function TodayPage () {
     const [userInfo, setUserInfo] = React.useContext(UserContext);
     const [habits, setHabits] = React.useState([]);
-    const [showForm, setShowForm] = React.useState(false)
+    const [showForm, setShowForm] = React.useState(false);
 
     React.useEffect(() => {
         const TrackltApi = new TrackltService();
@@ -21,7 +21,9 @@ export default function TodayPage () {
                 alert(e.message);
             }
         }
-        fetchHabits();
+        if (userInfo) {
+            fetchHabits();
+        }
     }, []);
 
     return (
@@ -32,13 +34,13 @@ export default function TodayPage () {
                     <h2>Meus hábitos</h2>
                     <button onClick={() => setShowForm(true)} data-test="habit-create-btn">+</button>
                 </TitleHabit>
-                {showForm && <HabitForm setShowForm={setShowForm} habits={habits} setHabits={setHabits}/>}
+                {showForm && <HabitForm setShowForm={setShowForm} habits={habits} setHabits={setHabits} />}
                 {habits.length !== 0 ? habits.map(habit => (
-                    <HabitForm key={habit.id} value={habit.name} habits={habits} setHabits={setHabits} selectedDays={habit.days} id={habit.id}/>
-                )) : 
-                <NoHabitContainer>
-                    <p>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</p>    
-                </NoHabitContainer>}
+                    <HabitForm key={habit.id} value={habit.name} habits={habits} setHabits={setHabits} selectedDays={habit.days} id={habit.id} />
+                )) :
+                    <NoHabitContainer>
+                        <p>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</p>
+                    </NoHabitContainer>}
             </MainContent>
             <Footer />
         </Container>

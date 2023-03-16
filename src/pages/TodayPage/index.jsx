@@ -7,7 +7,7 @@ import { UserContext } from '../../contexts/userContext';
 import { MainContent } from '../HabitsPage/styles';
 import { convertDay, formatZero } from '../../constants/utils';
 
-import { Container, TitleToday, HabitParagraph, HabitCard, SpanDay } from './styles';
+import { Container, TitleToday, HabitParagraph, HabitCard } from './styles';
 
 export default function TodayPage () {
     // States and Contexts
@@ -77,10 +77,10 @@ export default function TodayPage () {
                                 {habit.name}
                             </h3>
                             <p data-test="today-habit-sequence">
-                                Sequência atual: <SpanDay color={habit.done ? '#8FC549' : '#666666'}>{habit.currentSequence} {habit.currentSequence > 1 ? "dias" : "dia"}</SpanDay>
+                                Sequência atual: <span style={{color: habit.done ? '#8FC549' : '#666666'}}>{habit.currentSequence} {habit.currentSequence > 1 ? "dias" : "dia"}</span>
                             </p>
                             <p data-test="today-habit-record">
-                                Seu Recorde: <SpanDay color={habit.highestSequence === habit.currentSequence ? '#8FC549' : '#666666'} >{habit.highestSequence} {habit.highestSequence > 1 ? "dias" : "dia"}</SpanDay>
+                                Seu Recorde: <span style={{color: habit.highestSequence === habit.currentSequence ? '#8FC549' : '#666666'}}>{habit.highestSequence} {habit.highestSequence > 1 ? "dias" : "dia"}</span>
                             </p>
                         </div>
                         <svg data-test="today-habit-check-btn" xmlns="http://www.w3.org/2000/svg" className="ionicon" viewBox="0 0 512 512" onClick={() => handleDoneHabits(habit)}>
