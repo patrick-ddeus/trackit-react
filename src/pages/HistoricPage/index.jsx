@@ -80,7 +80,7 @@ export default function HistoricPage () {
         {modalOpen &&
           <Fade onClick={toggleModal}>
             <Modal >
-              <ModalHeader done={modalOptions.some(habit => habit.done)} />
+              <ModalHeader done={modalOptions.some(habit => !habit.done)} />
               <ul>
                 {modalOptions.map(options => (
                   <ModalItem done={options.done} key={options.id}>
