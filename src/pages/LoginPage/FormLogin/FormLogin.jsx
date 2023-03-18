@@ -5,7 +5,11 @@ import TrackltService from '../../../service/tracklit.api';
 import InputField from '../../../components/InputField';
 import Button from '../../../components/Button';
 
-function FormLogin ({ loginState, setLoginState }) {
+function FormLogin () {
+    const [loginState, setLoginState] = React.useState({
+        loading: false,
+        form: { email: "", password: "" }
+    });
     const [userInfo, setUserInfo] = React.useContext(UserContext);
     const navigate = useNavigate();
 
@@ -22,7 +26,7 @@ function FormLogin ({ loginState, setLoginState }) {
                 const response = await TrackltApi.authenticateUser(loginState.form);
                 setLoginState({ ...loginState, loading: false });
                 setUserInfo(response.data);
-                localStorage.setItem("userInfo", JSON.stringify({...response.data, password: ""}))
+                localStorage.setItem("userInfo", JSON.stringify({ ...response.data, password: "" }));
                 navigate("/hoje");
             } catch (e) {
                 alert(e.message);
@@ -40,23 +44,23 @@ function FormLogin ({ loginState, setLoginState }) {
                 type={"email"}
                 description={"email"}
                 onChangeFunction={loginChangeInput}
-                value={loginState.form["email"]} 
-                dataTest={"email-input"}/>
+                value={loginState.form["email"]}
+                dataTest={"email-input"} />
             <InputField
                 disabled={loginState.loading}
                 text={"senha"}
                 type={"password"}
                 description={"password"}
                 onChangeFunction={loginChangeInput}
-                value={loginState.form["password"]} 
-                dataTest={"password-input"}/>
-            <Button 
-            text="Entrar" 
-            loading={loginState.loading} 
-            onClickFunction={handleLogin} 
-            width="100%"
-            height="45px"
-            dataTest={"login-btn"}
+                value={loginState.form["password"]}
+                dataTest={"password-input"} />
+            <Button
+                text="Entrar"
+                loading={loginState.loading}
+                onClickFunction={handleLogin}
+                width="100%"
+                height="45px"
+                dataTest={"login-btn"}
             />
         </form>
     );

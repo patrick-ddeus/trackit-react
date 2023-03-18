@@ -8,12 +8,11 @@ export const Container = styled.div`
 
 
 export const MainContent = styled.main`
-    padding:98px 17px 0;
+    padding:98px 17px 75px;
     font-family: 'Lexend Deca';
     font-style: normal;
     font-weight: 400;
     background-color:#F2F2F2;
-    margin-bottom: 75px;
 `;
 
 export const TitleHabit = styled.div`

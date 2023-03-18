@@ -5,16 +5,10 @@ import FormLogin from './FormLogin/FormLogin';
 
 import * as S from "./styles";
 function LoginPage () {
-  const [loginState, setLoginState] = React.useState({
-    loading: false,
-    form: { email: "", password: "" }
-  });
-
-
   return (
     <S.Container>
       <img src={Logo} alt="logo" />
-      <FormLogin loginState={loginState} setLoginState={setLoginState}/>
+      <FormLogin/>
       <Link to={"/cadastro"} data-test="signup-link"> Não tem conta? Cadastre-se!</Link>
     </S.Container>
   );

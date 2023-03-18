@@ -32,17 +32,17 @@ export default function TodayPage () {
     React.useEffect(() => {
         const doneHabits = todayHabits.filter(habit => habit.done);
         const progress = (doneHabits.length / todayHabits.length) * 100;
-        setUserInfo({ ...userInfo, progress: progress || 0 });
+        setUserInfo({ ...userInfo, progress: progress });
     }, [todayHabits]);
 
     async function handleDoneHabits (habit) {
         try {
             if (habit.done) {
+                TrackltApi.postUndoneHabit(habit.id, userInfo.token);
                 toggleCheckedButton(habit);
-                await TrackltApi.postUndoneHabit(habit.id, userInfo.token);
             } else {
+                TrackltApi.postDoneHabit(habit.id, userInfo.token);
                 toggleCheckedButton(habit);
-                await TrackltApi.postDoneHabit(habit.id, userInfo.token);
             }
         } catch (error) {
             alert(error);

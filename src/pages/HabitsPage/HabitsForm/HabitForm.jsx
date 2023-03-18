@@ -29,9 +29,10 @@ export default function HabitForm ({ selectedDays, id, value, setShowForm, habit
   }
 
   async function handleSubmit () {
-    const bodyPost = {};
-    bodyPost.name = userInfo.form;
-    bodyPost.days = pageConfig.isSelected;
+    const bodyPost = {
+      name:userInfo.form,
+      days:pageConfig.isSelected
+    };
     setPageConfig({ ...pageConfig, loading: true });
     try {
       const response = await TrackltApi.postHabit(bodyPost, userInfo.token);
@@ -57,9 +58,6 @@ export default function HabitForm ({ selectedDays, id, value, setShowForm, habit
 
   function handleDeleteHabit (id) {
     const transformedHabits = habits.filter(habit => habit.id !== id);
-    // eslint-disable-next-line no-restricted-globals
-    const confirmDelete = window.confirm("Essa ação é irreversível, tem certeza que deseja deletar?");
-
     async function deleteHabitEvent () {
       try {
         TrackltApi.deleteHabit(id, userInfo.token);
@@ -68,6 +66,8 @@ export default function HabitForm ({ selectedDays, id, value, setShowForm, habit
         alert(error);
       }
     }
+    // eslint-disable-next-line no-restricted-globals
+    const confirmDelete = window.confirm("Essa ação é irreversível, tem certeza que deseja deletar?");
     if (confirmDelete) {
       deleteHabitEvent();
     }
