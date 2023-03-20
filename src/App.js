@@ -11,7 +11,7 @@ import HistoricPage from "./pages/HistoricPage";
 function App () {
   const [userInfo, setUserInfo] = React.useState(JSON.parse(localStorage.getItem("userInfo")) || null);
   return (
-    <UserContext.Provider value={[userInfo, setUserInfo]}>
+    <UserContext.Provider value={{userInfo, setUserInfo}}>
       <Router>
         <Routes>
           <Route path="/" element={<LoginPage />} />

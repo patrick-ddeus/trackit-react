@@ -8,7 +8,7 @@ import { Container, ButtonDay, ButtonsContainer, HabitTitle } from './styles';
 const days = ["Domingo", "Segunda", "Terca", "Quarta", "Quinta", "Sexta", "Sabado"];
 
 export default function HabitForm ({ selectedDays, id, value, setShowForm, habits, setHabits }) {
-  const [userInfo, setUserInfo] = React.useContext(UserContext);
+  const {userInfo, setUserInfo} = React.useContext(UserContext);
   const [pageConfig, setPageConfig] = React.useState({
     form: "",
     isSelected: selectedDays || userInfo.days || [],

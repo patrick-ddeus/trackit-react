@@ -14,7 +14,7 @@ export default function HistoricPage () {
   const [historic, setHistoric] = React.useState([]);
   const [modalOpen, setModalOpen] = React.useState(false);
   const [modalOptions, setModalOptions] = React.useState([]);
-  const [userInfo, setUserInfo] = React.useContext(UserContext);
+  const { userInfo } = React.useContext(UserContext);
 
   React.useEffect(() => {
     const TrackltApi = new TrackltService();
@@ -27,7 +27,7 @@ export default function HistoricPage () {
         alert(e);
       }
     }
-    if(userInfo){
+    if (userInfo) {
       fetchHistoric();
     }
 

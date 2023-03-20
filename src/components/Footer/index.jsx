@@ -1,12 +1,12 @@
 import React from 'react';
 import { UserContext } from '../../contexts/userContext';
-import { Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import { colors } from '../../constants/colors';
 import { Container } from './styles';
 export default function Footer () {
-    const [userInfo, setUserInfo] = React.useContext(UserContext);
+    const { userInfo } = React.useContext(UserContext);
 
     return (
         <Container data-test="menu">

@@ -6,7 +6,7 @@ import Footer from '../../components/Footer';
 import HabitForm from './HabitsForm/HabitForm';
 import { Container, MainContent, TitleHabit, NoHabitContainer } from './styles';
 export default function TodayPage () {
-    const [userInfo, setUserInfo] = React.useContext(UserContext);
+    const { userInfo } = React.useContext(UserContext);
     const [habits, setHabits] = React.useState([]);
     const [showForm, setShowForm] = React.useState(false);
 

@@ -10,7 +10,7 @@ function FormLogin () {
         loading: false,
         form: { email: "", password: "" }
     });
-    const [userInfo, setUserInfo] = React.useContext(UserContext);
+    const { setUserInfo } = React.useContext(UserContext);
     const navigate = useNavigate();
 
     function loginChangeInput (event) {
