@@ -1,13 +1,9 @@
-/* eslint-disable import/no-anonymous-default-export */
 import axios from "axios";
 
 class TrackltService {
     constructor() {
         this.baseurl = (endpoint = "/") => `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit${endpoint}`;
-        this.cache = {
-            ...JSON.parse(localStorage.getItem("cache")),
-            currentTime: new Date().getTime()
-        };
+        this.cache = {}
     }
 
     authenticateUser = async (body) => {
@@ -15,8 +11,8 @@ class TrackltService {
             const data = await axios.post(this.baseurl("/auth/login"), body);
             return data;
         } catch (e) {
-            if (e.response.status === 422) {
-                throw new Error("Email ou senha inválidos!");
+            if(e.response.status === 422){
+                throw new Error("Email ou senha inválidos!")
             }
         }
     };
@@ -30,69 +26,46 @@ class TrackltService {
     };
 
     getHabits = async (token) => {
-        const url = this.baseurl("/habits");
         const config = {
             headers: {
                 "Authorization": `Bearer ${token}`
             }
         };
-
-        if (this.cache[url] && this.cache[url].expires > this.cache.currentTime) {
-            const data = this.cache[url].value;
+        try {
+            const data = await axios.get(this.baseurl("/habits"), config);
             return data;
-        } else {
-            try {
-                const data = await axios.get(url, config);
-                this.setCache(url, data);
-                return data;
-            } catch (e) {
-                throw new Error(e.response.data.message);
-            }
+        } catch (e) {
+            throw new Error(e.response.data.message);
         }
-
     };
 
     getHabitToday = async (token) => {
-        const url = this.baseurl("/habits/today");
         const config = {
             headers: {
                 "Authorization": `Bearer ${token}`
             }
         };
-        if (this.cache[url] && this.cache[url].expires > this.cache.currentTime) {
-            const data = this.cache[url].value;
+        try {
+            const data = await axios.get(this.baseurl("/habits/today"), config);
             return data;
-        } else {
-            try {
-                const data = await axios.get(url, config);
-                this.setCache(url, data);
-                return data;
-            } catch (e) {
-                throw new Error(e.response.data.message);
-            }
+        } catch (e) {
+            throw new Error(e.response.data.message);
         }
     };
 
     getHistoric = async (token) => {
-        const url = this.baseurl("/habits/history/daily");
         const config = {
             headers: {
                 "Authorization": `Bearer ${token}`
             }
         };
-        if (this.cache[url] && this.cache[url].expires > this.cache.currentTime) {
-            const data = this.cache[url].value;
+        try {
+            const data = await axios.get(this.baseurl("/habits/history/daily"), config);
             return data;
-        } else {
-            try {
-                const data = await axios.get(url, config);
-                this.setCache(url, data)
-                return data;
-            } catch (e) {
-                throw new Error(e.response.data.message);
-            }
+        } catch (e) {
+            throw new Error(e.response.data.message);
         }
-    };
+    }
 
     postHabit = async (body, token) => {
         const config = {
@@ -149,21 +122,6 @@ class TrackltService {
             throw new Error(e.response.data.message);
         }
     };
-
-    setCache = (chave, data) => {
-        const date = new Date();
-        const expireTime = date.getTime() + (60 * 1000);
-        this.cache[chave] = {
-            value: data,
-            expires: expireTime
-        };
-        localStorage.setItem("cache", JSON.stringify(this.cache));
-    };
-
-    getCache = () => {
-        const value = localStorage.getItem("cache");
-        this.cache = JSON.parse(value);
-    };
 }
 
-export default new TrackltService();
+export default TrackltService;
