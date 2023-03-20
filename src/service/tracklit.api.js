@@ -3,6 +3,7 @@ import axios from "axios";
 class TrackltService {
     constructor() {
         this.baseurl = (endpoint = "/") => `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit${endpoint}`;
+        this.cache = {}
     }
 
     authenticateUser = async (body) => {
@@ -10,7 +11,9 @@ class TrackltService {
             const data = await axios.post(this.baseurl("/auth/login"), body);
             return data;
         } catch (e) {
-            throw new Error(e.response.data.message);
+            if(e.response.status === 422){
+                throw new Error("Email ou senha inválidos!")
+            }
         }
     };
     registerUser = async (body) => {
