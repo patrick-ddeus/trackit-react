@@ -2,7 +2,7 @@ import React from 'react';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import Calendar from 'react-calendar';
-import TrackltService from '../../service/tracklit.api';
+import TrackltApi from '../../service/tracklit.api';
 import 'react-calendar/dist/Calendar.css';
 
 import { formatZero } from '../../constants/utils';
@@ -17,8 +17,6 @@ export default function HistoricPage () {
   const { userInfo } = React.useContext(UserContext);
 
   React.useEffect(() => {
-    const TrackltApi = new TrackltService();
-
     async function fetchHistoric () {
       try {
         const response = await TrackltApi.getHistoric(userInfo.token);

@@ -2,19 +2,18 @@ import React from 'react';
 import { UserContext } from '../../../contexts/userContext';
 import InputField from '../../../components/InputField';
 import Button from '../../../components/Button';
-import TrackltService from '../../../service/tracklit.api';
+import TrackltApi from '../../../service/tracklit.api';
 import { Container, ButtonDay, ButtonsContainer, HabitTitle } from './styles';
 
 const days = ["Domingo", "Segunda", "Terca", "Quarta", "Quinta", "Sexta", "Sabado"];
 
 export default function HabitForm ({ selectedDays, id, value, setShowForm, habits, setHabits }) {
-  const {userInfo, setUserInfo} = React.useContext(UserContext);
+  const { userInfo, setUserInfo } = React.useContext(UserContext);
   const [pageConfig, setPageConfig] = React.useState({
     form: "",
     isSelected: selectedDays || userInfo.days || [],
     loading: false
   });
-  const TrackltApi = new TrackltService();
 
   function handleButtonDayClick (day) {
     const existingDay = pageConfig.isSelected.find(daySelected => daySelected === day);
@@ -30,8 +29,8 @@ export default function HabitForm ({ selectedDays, id, value, setShowForm, habit
 
   async function handleSubmit () {
     const bodyPost = {
-      name:userInfo.form,
-      days:pageConfig.isSelected
+      name: userInfo.form,
+      days: pageConfig.isSelected
     };
     setPageConfig({ ...pageConfig, loading: true });
     try {
@@ -94,13 +93,24 @@ export default function HabitForm ({ selectedDays, id, value, setShowForm, habit
           </svg>
         </HabitTitle>}
       {days.map((day, index) =>
-        <ButtonDay data-test="habit-day" disabled={pageConfig.loading || value} key={index} isSelected={pageConfig.isSelected.includes(index)} onClick={() => handleButtonDayClick(index)}>
+        <ButtonDay
+          data-test="habit-day"
+          disabled={pageConfig.loading || value}
+          key={index}
+          isSelected={pageConfig.isSelected.includes(index)}
+          onClick={() => handleButtonDayClick(index)}>
           {day.charAt(0)}
         </ButtonDay>
       )}
       {!value && <ButtonsContainer>
         <button disabled={pageConfig.loading} onClick={() => setShowForm(false)} data-test="habit-create-cancel-btn">Cancelar</button>
-        <Button dotHeight="50" dotWidth="50" onClickFunction={handleSubmit} text={"Salvar"} loading={pageConfig.loading} dataTest={"habit-create-save-btn"} />
+        <Button
+          dotHeight="50"
+          dotWidth="50"
+          onClickFunction={handleSubmit}
+          text={"Salvar"}
+          loading={pageConfig.loading}
+          dataTest={"habit-create-save-btn"} />
       </ButtonsContainer>}
     </Container>
   );

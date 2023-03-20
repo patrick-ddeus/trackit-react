@@ -1,7 +1,7 @@
 import React from 'react';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
-import TrackltService from '../../service/tracklit.api';
+import TrackltApi from '../../service/tracklit.api';
 import DayJs from "dayjs";
 import { UserContext } from '../../contexts/userContext';
 import { MainContent } from '../HabitsPage/styles';
@@ -15,7 +15,6 @@ export default function TodayPage () {
     const { userInfo, setUserInfo } = React.useContext(UserContext);
     // Constants
     const hasDoneHabit = todayHabits.some(habit => habit.done);
-    const TrackltApi = new TrackltService();
 
     React.useEffect(() => {
         async function fetchHabit () {
@@ -32,7 +31,7 @@ export default function TodayPage () {
     React.useEffect(() => {
         const doneHabits = todayHabits.filter(habit => habit.done);
         const progress = (doneHabits.length / todayHabits.length) * 100;
-        setUserInfo({ ...userInfo, progress: progress });
+        setUserInfo({ ...userInfo, progress: progress || 0 });
     }, [todayHabits]);
 
     async function handleDoneHabits (habit) {

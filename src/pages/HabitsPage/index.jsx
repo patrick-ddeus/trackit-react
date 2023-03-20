@@ -1,5 +1,5 @@
 import React from 'react';
-import TrackltService from '../../service/tracklit.api';
+import TrackltApi from '../../service/tracklit.api';
 import { UserContext } from '../../contexts/userContext';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
@@ -9,10 +9,7 @@ export default function TodayPage () {
     const { userInfo } = React.useContext(UserContext);
     const [habits, setHabits] = React.useState([]);
     const [showForm, setShowForm] = React.useState(false);
-
     React.useEffect(() => {
-        const TrackltApi = new TrackltService();
-
         async function fetchHabits () {
             try {
                 const response = await TrackltApi.getHabits(userInfo.token);
